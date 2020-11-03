@@ -7,16 +7,24 @@ var minTime = 5;
 var maxTime = 10;
 
 (function() {
+    // populate planets and moons array
     planetLinkList = getPlanetsLinks();
+
+    // check if user is on valid universe and community
     if (!validateUniverse()) return;
 
+    // generate a random time for the countdown timer
     interval = randomTime(minTime, maxTime);
 
+    // append the countdown timer to the DOM
     $( `<div id="countNotifier"><p class="textCenter"><span id="timerN">Timer:</span> <span id="countDownNotifier">${getTimeStr(interval)}</span></p></div>` ).insertBefore( "#countColonies" );
 
     timer = setInterval(notifierLoop, 1000);
 })();
 
+/**
+ * Contacts the SMS API and creates new SMS request
+ */
 function sendMessage(){
     var url = "https://miltonalexandre-cardoso.outsystemscloud.com/SMSSender/rest/v1/SendSMS/934184517/QkuCIKh0F1ZoH3Pe4YVOAoNcL";
 
@@ -78,7 +86,7 @@ function getTimeStr(seconds) {
 }
 
 /**
- * Main extension function, will run every second
+ * Main extension function, will run every second and update the countdown
  */
 function notifierLoop(){
 
@@ -102,11 +110,9 @@ function notifierLoop(){
 function checkIncomingAttack(){
     var eventList = $('.eventFleet');
 
-    for (let i = 0; i < eventList.length; i++) {
-        const missinType = eventList[i].getAttribute("data-mission-type");
-
-        if (missinType == 1){
-            return true;
+    for (const el of eventList){
+        if (el.getAttribute("data-mission-type") == 1){
+            return true
         }
     }
     return false;
@@ -121,14 +127,15 @@ function getPlanetsLinks(){
 
     var planetLinkList = [];
 
-    for (let i = 0; i < planetList.length; i++) {
-        planetLinkList.push(planetList[i].getAttribute("href"));
+    // iterate all planets
+    for (const planet of planetList){
+        planetLinkList.push(planet.getAttribute("href"));
     }
 
-    for (let i = 0; i < moonList.length; i++) {
-        planetLinkList.push(moonList[i].getAttribute("href"));
+    // iterate all moons
+    for (const moon of moonList){
+        planetLinkList.push(moon.getAttribute("href"));
     }
-
     return planetLinkList;
 }
 
