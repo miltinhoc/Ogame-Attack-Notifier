@@ -15,6 +15,7 @@
 		{
 			"matches":[ "https://*.ogame.gameforge.com/game/index.php?page=*" ],
 			"js": ["js/jquery.js", "js/content.js"],
+			"css": ["skin/style.css"],
 			"run_at": "document_end"	
 		}
 	]

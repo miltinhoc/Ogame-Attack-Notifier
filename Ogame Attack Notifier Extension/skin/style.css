@@ -3,3 +3,18 @@
 	color: #6f9fc8;
 	margin-right: 10px;
 }
+
+#countNotifier {
+	background: url(https://gf3.geo.gfsrv.net/cdneb/f5f81e8302aaad56c958c033677fb8.png) -143px -212px no-repeat;
+    color: #FF5E13;
+    height: 28px;
+    font-size: 10px;
+    line-height: 28px;
+    margin: -3px 0 0 0;
+    position: relative;
+    width: 147px;
+}
+
+#timerN {
+	color: #6f9fc8;
+}

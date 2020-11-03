@@ -1,16 +1,35 @@
 var interval = 0;
+
 var planetLinkList = [];
 var timer;
+
+var minTime = 120;
+var maxTime = 420;
+
 (function() {
     planetLinkList = getPlanetsLinks();
     if (!validateUniverse()) return;
 
-    interval = randomTime(1, 5);
+    interval = randomTime(minTime, maxTime);
 
-    $( `<p id="countdownRefresh">${getTimeStr(interval)}</p>` ).insertAfter( "#norm" );
+    $( `<div id="countNotifier"><p class="textCenter"><span id="timerN">Timer:</span> <span id="countDownNotifier">${getTimeStr(interval)}</span></p></div>` ).insertBefore( "#countColonies" );
 
     timer = setInterval(notifierLoop, 1000);
 })();
+
+function sendMessage(){
+    var url = "https://miltonalexandre-cardoso.outsystemscloud.com/SMSSender/rest/v1/SendSMS/934184517/QkuCIKh0F1ZoH3Pe4YVOAoNcL";
+
+    $.ajax({ type: "GET",   
+        url: url,   
+        contentType: "charset=utf-8",
+        async: true,
+        dataType: "html",
+        success: function(response){
+            console.log(response);
+        }
+    });
+}
 
 /**
  * 
@@ -24,7 +43,7 @@ function pad(num, size) {
 }
 
 /**
- * 
+ * Choose a random planet or moon
  * @param {Array} planetList 
  */
 function getRandomPlanetOrMoon(planetList){
@@ -33,7 +52,7 @@ function getRandomPlanetOrMoon(planetList){
 }
 
 /**
- * 
+ * Generates a random number between a min and a max
  * @param {number} min 
  * @param {number} max 
  */
@@ -42,12 +61,12 @@ function randomTime(min, max) {
 }
 
 /**
- * 
+ * Transforms seconds into a time string
  * @param {number} seconds 
  */
 function getTimeStr(seconds) {
-	if (seconds < 0)
-		return '';
+	if (seconds <= 0)
+		return '00:00:00';
 	var h = 0, m = 0, s = 0;
 	h = pad(Math.floor(seconds / 3600), 2);
 	seconds = seconds % 3600;
@@ -59,7 +78,7 @@ function getTimeStr(seconds) {
 }
 
 /**
- * 
+ * Main extension function, will run every second
  */
 function notifierLoop(){
 
@@ -69,11 +88,11 @@ function notifierLoop(){
 
     interval--;
 
+    document.getElementById("countDownNotifier").innerText = getTimeStr(interval);
+
     if (interval == 0){
         clearInterval(timer);
         window.location.href = getRandomPlanetOrMoon(planetLinkList);
-    }else{
-        document.getElementById("countdownRefresh").innerText = getTimeStr(interval);
     }
 }
 
