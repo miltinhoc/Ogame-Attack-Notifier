@@ -16,6 +16,11 @@ var maxTime = 10;
     // generate a random time for the countdown timer
     interval = randomTime(minTime, maxTime);
 
+    //check if user is receiving an attack 
+    if (checkIncomingAttack()){
+        console.log(checkIncomingAttack());
+    }
+
     // append the countdown timer to the DOM
     $( `<div id="countNotifier"><p class="textCenter"><span id="timerN">Timer:</span> <span id="countDownNotifier">${getTimeStr(interval)}</span></p></div>` ).insertBefore( "#countColonies" );
 
@@ -89,16 +94,15 @@ function getTimeStr(seconds) {
  * Main extension function, will run every second and update the countdown
  */
 function notifierLoop(){
-
-    if (checkIncomingAttack()){
-        console.log(checkIncomingAttack());
-    }
-
+    // update countdown seconds
     interval--;
 
+    // display countdown time on the DOM
     document.getElementById("countDownNotifier").innerText = getTimeStr(interval);
 
+    // if there is no time left, choose a random planet/moon and visit the URL
     if (interval == 0){
+        // Clears setInterval
         clearInterval(timer);
         window.location.href = getRandomPlanetOrMoon(planetLinkList);
     }
