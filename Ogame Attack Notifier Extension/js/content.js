@@ -3,8 +3,8 @@ var interval = 0;
 var planetLinkList = [];
 var timer;
 
-var minTime = 120;
-var maxTime = 420;
+var minTime = 5;
+var maxTime = 10;
 
 (function() {
     planetLinkList = getPlanetsLinks();
@@ -113,7 +113,7 @@ function checkIncomingAttack(){
 }
 
 /**
- * Gets a array containing of all the planets URLs
+ * Gets a array containing of all the planets and moons URLs
  */
 function getPlanetsLinks(){
     var planetList = $('.planetlink');
